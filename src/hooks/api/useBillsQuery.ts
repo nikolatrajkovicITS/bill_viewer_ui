@@ -16,12 +16,13 @@ export const useBillsQuery = (
   const {
     filter: { status }
   } = useBillStore();
+
   return useQuery({
     queryKey: ['bills', page, pageSize, type],
     queryFn: async () => {
       try {
         const params = new URLSearchParams({
-          skip: ((page - 1) * pageSize).toString(),
+          skip: (page * pageSize).toString(),
           limit: pageSize.toString(),
           bill_status: status
         });
@@ -36,6 +37,7 @@ export const useBillsQuery = (
         const parsedData = JSON.parse(data.contents);
         const response = billApiResponseSchema.parse(parsedData);
         const billData = response.results?.map(adaptBillData) || [];
+
         console.log('adapted billData:', billData);
 
         return billData;
