@@ -1,25 +1,15 @@
-import { useState } from 'react'
-import './App.css'
+import './App.css';
+import { useBillsQuery } from './hooks/api/useBillsQuery';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { data, isLoading, isError } = useBillsQuery(1, 10, 'Current');
 
+  console.log({ data, isLoading, isError });
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main>
+      <h1>Bill Viewer</h1>
+    </main>
+  );
 }
 
-export default App
+export default App;
