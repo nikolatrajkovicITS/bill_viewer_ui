@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { httpClient } from '../../config/httpClient';
 import {
@@ -18,11 +18,12 @@ export const useBillsQuery = (
   } = useBillStore();
 
   return useQuery({
-    queryKey: ['bills', page, pageSize, type],
+    queryKey: ['bills', page, pageSize, type, status],
     queryFn: async () => {
       try {
+        const skip = page * pageSize;
         const params = new URLSearchParams({
-          skip: (page * pageSize).toString(),
+          skip: skip.toString(),
           limit: pageSize.toString(),
           bill_status: status
         });
@@ -39,8 +40,6 @@ export const useBillsQuery = (
         const billData = response.results?.map(adaptBillData) || [];
         const totalCount = response.head.counts.billCount;
 
-        console.log('adapted billData:', billData);
-
         return {
           data: billData,
           totalCount
@@ -50,6 +49,7 @@ export const useBillsQuery = (
         throw error;
       }
     },
-    placeholderData: keepPreviousData
+    staleTime: 1000 * 60 * 1,
+    refetchOnWindowFocus: false
   });
 };

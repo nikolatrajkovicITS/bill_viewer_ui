@@ -45,8 +45,8 @@ export const billApiSchema = z.object({
               uri: z.string().nullable()
             }),
             by: z.object({
-              showAs: z.string(),
-              uri: z.string()
+              showAs: z.string().nullable(),
+              uri: z.string().nullable()
             }),
             isPrimary: z.boolean()
           })
@@ -83,7 +83,7 @@ export const adaptBillData = (apiItem: unknown) => {
 
   const status = bill.mostRecentStage?.event?.showAs ?? '—';
   const primarySponsor =
-    bill.sponsors?.find((s) => s.sponsor.isPrimary)?.sponsor.by.showAs ?? '—';
+    bill.sponsors?.find((s) => s.sponsor.isPrimary)?.sponsor.by.showAs || '—';
 
   return billModelSchema.parse({
     billNo: bill.billNo ?? '—',
