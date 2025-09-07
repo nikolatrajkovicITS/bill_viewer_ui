@@ -37,10 +37,14 @@ export const useBillsQuery = (
         const parsedData = JSON.parse(data.contents);
         const response = billApiResponseSchema.parse(parsedData);
         const billData = response.results?.map(adaptBillData) || [];
+        const totalCount = response.head.counts.billCount;
 
         console.log('adapted billData:', billData);
 
-        return billData;
+        return {
+          data: billData,
+          totalCount
+        };
       } catch (error) {
         console.error('Error in useBills:', error);
         throw error;

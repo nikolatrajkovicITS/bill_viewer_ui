@@ -11,11 +11,14 @@ export const BillTable = () => {
     setPageSize
   } = useBillStore();
   const {
-    data = [],
+    data: queryResult,
     isLoading,
     isError,
     error
   } = useBillsQuery(page, pageSize, 'Current');
+
+  const data = queryResult?.data || [];
+  const totalCount = queryResult?.totalCount || 0;
 
   const columns = [
     { id: 'billNo', label: 'Bill No' },
@@ -48,7 +51,7 @@ export const BillTable = () => {
       pagination={{
         page,
         pageSize,
-        totalCount: data.length,
+        totalCount,
         onPageChange,
         onPageSizeChange
       }}
