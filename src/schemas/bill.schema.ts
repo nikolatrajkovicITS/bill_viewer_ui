@@ -35,6 +35,23 @@ export const billApiSchema = z.object({
           progressStage: z.number().optional()
         })
       })
+      .optional(),
+    sponsors: z
+      .array(
+        z.object({
+          sponsor: z.object({
+            as: z.object({
+              showAs: z.string().nullable(),
+              uri: z.string().nullable()
+            }),
+            by: z.object({
+              showAs: z.string(),
+              uri: z.string()
+            }),
+            isPrimary: z.boolean()
+          })
+        })
+      )
       .optional()
   })
 });
@@ -56,7 +73,8 @@ export const billModelSchema = z.object({
   shortTitleGa: z.string().default('—'),
   longTitleEn: z.string().default('—'),
   longTitleGa: z.string().default('—'),
-  status: z.string().default('—')
+  status: z.string().default('—'),
+  sponsor: z.string().default('—')
 });
 
 export const adaptBillData = (apiItem: unknown) => {
@@ -64,6 +82,8 @@ export const adaptBillData = (apiItem: unknown) => {
   const bill = parsed.bill;
 
   const status = bill.mostRecentStage?.event?.showAs ?? '—';
+  const primarySponsor =
+    bill.sponsors?.find((s) => s.sponsor.isPrimary)?.sponsor.by.showAs ?? '—';
 
   return billModelSchema.parse({
     billNo: bill.billNo ?? '—',
@@ -72,6 +92,7 @@ export const adaptBillData = (apiItem: unknown) => {
     shortTitleGa: bill.shortTitleGa ?? '—',
     longTitleEn: bill.longTitleEn ?? '—',
     longTitleGa: bill.longTitleGa ?? '—',
-    status
+    status,
+    sponsor: primarySponsor
   });
 };

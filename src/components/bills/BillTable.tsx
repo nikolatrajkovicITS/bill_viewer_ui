@@ -21,6 +21,7 @@ export const BillTable = () => {
     { id: 'billNo', label: 'Bill No' },
     { id: 'billType', label: 'Type' },
     { id: 'status', label: 'Status' },
+    { id: 'sponsor', label: 'Sponsor' },
     { id: 'shortTitleEn', label: 'Short Title' }
   ] satisfies ColumnConfig<BillModel>[];
 
