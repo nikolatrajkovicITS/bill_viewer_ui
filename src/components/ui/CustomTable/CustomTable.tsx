@@ -9,6 +9,7 @@ import {
   TableRow
 } from '@mui/material';
 
+import { COMMON_TEXT, TABLE_CONFIG } from '../../../constants';
 import type { CustomTableProps } from './CustomTable.types';
 
 export const CustomTable = <RowType,>({
@@ -20,8 +21,10 @@ export const CustomTable = <RowType,>({
 }: CustomTableProps<RowType>) => {
   return (
     <Paper elevation={0}>
-      <TableContainer>
-        <Table size="small">
+      <TableContainer
+        sx={{ maxHeight: TABLE_CONFIG.MAX_HEIGHT, overflow: 'auto' }}
+      >
+        <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
               {columns.map((col) => (
@@ -35,7 +38,7 @@ export const CustomTable = <RowType,>({
             {rows.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length}>
-                  {emptyState ?? 'No records found'}
+                  {emptyState ?? COMMON_TEXT.NO_DATA}
                 </TableCell>
               </TableRow>
             ) : (
@@ -48,7 +51,9 @@ export const CustomTable = <RowType,>({
                 >
                   {columns.map((col) => (
                     <TableCell key={String(col.id)}>
-                      {col.render ? col.render(row) : String(row[col.id] ?? '')}
+                      {col.render
+                        ? col.render(row)
+                        : String(row[col.id] ?? COMMON_TEXT.NO_DATA)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -68,7 +73,9 @@ export const CustomTable = <RowType,>({
           onRowsPerPageChange={(e) =>
             pagination.onPageSizeChange(parseInt(e.target.value, 10))
           }
-          rowsPerPageOptions={pagination.rowsPerPageOptions ?? [10, 25, 50]}
+          rowsPerPageOptions={
+            pagination.rowsPerPageOptions ?? TABLE_CONFIG.PAGE_SIZE_OPTIONS
+          }
         />
       )}
     </Paper>

@@ -1,7 +1,8 @@
+import { COLUMN_WIDTHS, COMMON_TEXT, TABLE_CONFIG } from '../../constants';
 import { useBillsQuery } from '../../hooks/api/useBillsQuery';
 import { useBillStore } from '../../store/useBillStore';
 import type { BillModel } from '../../types/bill.type';
-import { CustomTable } from '../ui';
+import { CustomTable, StatusChip } from '../ui';
 import type { ColumnConfig } from '../ui/CustomTable/CustomTable.types';
 
 export const BillTable = () => {
@@ -20,13 +21,18 @@ export const BillTable = () => {
   const data = queryResult?.data || [];
   const totalCount = queryResult?.totalCount || 0;
 
-  const columns = [
-    { id: 'billNo', label: 'Bill No' },
-    { id: 'billType', label: 'Type' },
-    { id: 'status', label: 'Status' },
-    { id: 'sponsor', label: 'Sponsor' },
+  const columns: ColumnConfig<BillModel>[] = [
+    { id: 'billNo', label: 'Bill No', width: COLUMN_WIDTHS.BILL_NO },
+    { id: 'billType', label: 'Type', width: COLUMN_WIDTHS.TYPE },
+    {
+      id: 'status',
+      label: 'Status',
+      width: COLUMN_WIDTHS.STATUS,
+      render: (bill: BillModel) => <StatusChip status={bill.status} />
+    },
+    { id: 'sponsor', label: 'Sponsor', width: COLUMN_WIDTHS.SPONSOR },
     { id: 'shortTitleEn', label: 'Short Title' }
-  ] satisfies ColumnConfig<BillModel>[];
+  ];
 
   const onRowClick = (bill: BillModel) => {
     console.log(bill);
@@ -40,9 +46,15 @@ export const BillTable = () => {
     setPageSize(pageSize);
   };
 
-  if (isLoading) return <p>Loading…</p>;
+  if (isLoading) return <p>{COMMON_TEXT.LOADING}</p>;
 
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isError)
+    return (
+      <p>
+        {COMMON_TEXT.ERROR_PREFIX}
+        {error?.message}
+      </p>
+    );
 
   return (
     <CustomTable
@@ -56,7 +68,7 @@ export const BillTable = () => {
         onPageSizeChange
       }}
       onRowClick={onRowClick}
-      emptyState="No bills available"
+      emptyState={TABLE_CONFIG.EMPTY_STATE_MESSAGE}
     />
   );
 };
