@@ -1,4 +1,6 @@
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -9,7 +11,15 @@ import {
   TableRow
 } from '@mui/material';
 
-import { COMMON_TEXT, TABLE_CONFIG } from '../../../constants';
+import { useMemo, useState } from 'react';
+
+import { COMMON_TEXT, SORT_DIRECTIONS, TABLE_CONFIG } from '../../../constants';
+import type { SortConfig } from '../../../types/sort.types';
+import {
+  applySorting,
+  createSortConfig,
+  toggleSortDirection
+} from '../../../utils';
 import type { CustomTableProps } from './CustomTable.types';
 
 export const CustomTable = <RowType,>({
@@ -17,8 +27,31 @@ export const CustomTable = <RowType,>({
   rows,
   pagination,
   onRowClick,
-  emptyState
+  emptyState,
+  sortable = false,
+  defaultSort,
+  onSort
 }: CustomTableProps<RowType>) => {
+  const [sortConfig, setSortConfig] = useState<SortConfig<
+    keyof RowType
+  > | null>(defaultSort || null);
+
+  const handleSort = (columnId: keyof RowType) => {
+    if (!sortable) return;
+
+    const newSortConfig =
+      sortConfig?.key === columnId
+        ? createSortConfig(columnId, toggleSortDirection(sortConfig.direction))
+        : createSortConfig(columnId, SORT_DIRECTIONS.ASC);
+
+    setSortConfig(newSortConfig);
+    onSort?.(newSortConfig);
+  };
+
+  const sortedRows = useMemo(() => {
+    if (!sortable || !sortConfig) return rows;
+    return applySorting(rows, sortConfig);
+  }, [rows, sortConfig, sortable]);
   return (
     <Paper elevation={0}>
       <TableContainer
@@ -28,8 +61,51 @@ export const CustomTable = <RowType,>({
           <TableHead>
             <TableRow>
               {columns.map((col) => (
-                <TableCell key={String(col.id)} style={{ width: col.width }}>
-                  {col.label}
+                <TableCell
+                  key={String(col.id)}
+                  style={{ width: col.width }}
+                  sx={{
+                    cursor: sortable && col.sortable ? 'pointer' : 'default',
+                    userSelect: 'none'
+                  }}
+                  onClick={() => col.sortable && handleSort(col.id)}
+                >
+                  <Box display="flex" alignItems="center" gap={1}>
+                    {col.label}
+                    {sortable && col.sortable && (
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        sx={{ minWidth: 16 }}
+                      >
+                        <ArrowUpward
+                          fontSize="small"
+                          sx={{
+                            fontSize: 14,
+                            opacity:
+                              sortConfig?.key === col.id &&
+                              sortConfig?.direction === SORT_DIRECTIONS.ASC
+                                ? 1
+                                : 0.3,
+                            transition: 'opacity 0.2s'
+                          }}
+                        />
+                        <ArrowDownward
+                          fontSize="small"
+                          sx={{
+                            fontSize: 14,
+                            opacity:
+                              sortConfig?.key === col.id &&
+                              sortConfig?.direction === SORT_DIRECTIONS.DESC
+                                ? 1
+                                : 0.3,
+                            transition: 'opacity 0.2s',
+                            mt: -0.5
+                          }}
+                        />
+                      </Box>
+                    )}
+                  </Box>
                 </TableCell>
               ))}
             </TableRow>
@@ -42,7 +118,7 @@ export const CustomTable = <RowType,>({
                 </TableCell>
               </TableRow>
             ) : (
-              rows.map((row, idx) => (
+              sortedRows.map((row, idx) => (
                 <TableRow
                   key={idx}
                   hover

@@ -3,9 +3,9 @@ import { Chip } from '@mui/material';
 import { COMMON_TEXT } from '../../../constants';
 import { getStatusColor } from '../../../utils';
 
-interface StatusChipProps {
+type StatusChipProps = {
   status: string;
-}
+};
 
 export const StatusChip = ({ status }: StatusChipProps) => {
   if (status === COMMON_TEXT.NO_DATA) {

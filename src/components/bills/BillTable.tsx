@@ -22,16 +22,36 @@ export const BillTable = () => {
   const totalCount = queryResult?.totalCount || 0;
 
   const columns: ColumnConfig<BillModel>[] = [
-    { id: 'billNo', label: 'Bill No', width: COLUMN_WIDTHS.BILL_NO },
-    { id: 'billType', label: 'Type', width: COLUMN_WIDTHS.TYPE },
+    {
+      id: 'billNo',
+      label: 'Bill No',
+      width: COLUMN_WIDTHS.BILL_NO,
+      sortable: true
+    },
+    {
+      id: 'billType',
+      label: 'Type',
+      width: COLUMN_WIDTHS.TYPE,
+      sortable: true
+    },
     {
       id: 'status',
       label: 'Status',
       width: COLUMN_WIDTHS.STATUS,
-      render: (bill: BillModel) => <StatusChip status={bill.status} />
+      render: (bill: BillModel) => <StatusChip status={bill.status} />,
+      sortable: true
     },
-    { id: 'sponsor', label: 'Sponsor', width: COLUMN_WIDTHS.SPONSOR },
-    { id: 'shortTitleEn', label: 'Short Title' }
+    {
+      id: 'sponsor',
+      label: 'Sponsor',
+      width: COLUMN_WIDTHS.SPONSOR,
+      sortable: true
+    },
+    {
+      id: 'shortTitleEn',
+      label: 'Short Title',
+      sortable: true
+    }
   ];
 
   const onRowClick = (bill: BillModel) => {
@@ -69,6 +89,7 @@ export const BillTable = () => {
       }}
       onRowClick={onRowClick}
       emptyState={TABLE_CONFIG.EMPTY_STATE_MESSAGE}
+      sortable={true}
     />
   );
 };
