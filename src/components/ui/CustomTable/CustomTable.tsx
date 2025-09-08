@@ -1,19 +1,8 @@
-import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow
-} from '@mui/material';
+import { Paper, Table, TableContainer } from '@mui/material';
 
 import { useMemo, useState } from 'react';
 
-import { COMMON_TEXT, SORT_DIRECTIONS, TABLE_CONFIG } from '../../../constants';
+import { SORT_DIRECTIONS, TABLE_CONFIG } from '../../../constants';
 import type { SortConfig } from '../../../types/sort.types';
 import {
   applySorting,
@@ -21,6 +10,9 @@ import {
   toggleSortDirection
 } from '../../../utils';
 import type { CustomTableProps } from './CustomTable.types';
+import { CustomTableBody } from './CustomTableBody';
+import { CustomTableFooter } from './CustomTableFooter';
+import { CustomTableHeader } from './CustomTableHeader';
 
 export const CustomTable = <RowType,>({
   columns,
@@ -52,108 +44,28 @@ export const CustomTable = <RowType,>({
     if (!sortable || !sortConfig) return rows;
     return applySorting(rows, sortConfig);
   }, [rows, sortConfig, sortable]);
+
   return (
     <Paper elevation={0}>
       <TableContainer
         sx={{ maxHeight: TABLE_CONFIG.MAX_HEIGHT, overflow: 'auto' }}
       >
         <Table size="small" stickyHeader>
-          <TableHead>
-            <TableRow>
-              {columns.map((col) => (
-                <TableCell
-                  key={String(col.id)}
-                  style={{ width: col.width }}
-                  sx={{
-                    cursor: sortable && col.sortable ? 'pointer' : 'default',
-                    userSelect: 'none'
-                  }}
-                  onClick={() => col.sortable && handleSort(col.id)}
-                >
-                  <Box display="flex" alignItems="center" gap={1}>
-                    {col.label}
-                    {sortable && col.sortable && (
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        sx={{ minWidth: 16 }}
-                      >
-                        <ArrowUpward
-                          fontSize="small"
-                          sx={{
-                            fontSize: 14,
-                            opacity:
-                              sortConfig?.key === col.id &&
-                              sortConfig?.direction === SORT_DIRECTIONS.ASC
-                                ? 1
-                                : 0.3,
-                            transition: 'opacity 0.2s'
-                          }}
-                        />
-                        <ArrowDownward
-                          fontSize="small"
-                          sx={{
-                            fontSize: 14,
-                            opacity:
-                              sortConfig?.key === col.id &&
-                              sortConfig?.direction === SORT_DIRECTIONS.DESC
-                                ? 1
-                                : 0.3,
-                            transition: 'opacity 0.2s',
-                            mt: -0.5
-                          }}
-                        />
-                      </Box>
-                    )}
-                  </Box>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={columns.length}>
-                  {emptyState ?? COMMON_TEXT.NO_DATA}
-                </TableCell>
-              </TableRow>
-            ) : (
-              sortedRows.map((row, idx) => (
-                <TableRow
-                  key={idx}
-                  hover
-                  sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
-                  onClick={() => onRowClick?.(row)}
-                >
-                  {columns.map((col) => (
-                    <TableCell key={String(col.id)}>
-                      {col.render
-                        ? col.render(row)
-                        : String(row[col.id] ?? COMMON_TEXT.NO_DATA)}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            )}
-          </TableBody>
+          <CustomTableHeader
+            columns={columns}
+            sortable={sortable}
+            sortConfig={sortConfig}
+            onSort={handleSort}
+          />
+          <CustomTableBody
+            columns={columns}
+            rows={sortedRows}
+            emptyState={emptyState}
+            onRowClick={onRowClick}
+          />
         </Table>
       </TableContainer>
-
-      {pagination && (
-        <TablePagination
-          component="div"
-          count={pagination.totalCount}
-          page={pagination.page}
-          rowsPerPage={pagination.pageSize}
-          onPageChange={(_, newPage) => pagination.onPageChange(newPage)}
-          onRowsPerPageChange={(e) =>
-            pagination.onPageSizeChange(parseInt(e.target.value, 10))
-          }
-          rowsPerPageOptions={
-            pagination.rowsPerPageOptions ?? TABLE_CONFIG.PAGE_SIZE_OPTIONS
-          }
-        />
-      )}
+      <CustomTableFooter pagination={pagination} />
     </Paper>
   );
 };
