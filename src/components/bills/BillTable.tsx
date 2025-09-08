@@ -7,6 +7,7 @@ import {
 import { useBillsQuery } from '../../hooks/api/useBillsQuery';
 import { useQueryError } from '../../hooks/useQueryError';
 import { useBillStore } from '../../store/useBillStore';
+import { MODAL_TYPES, useModalStore } from '../../store/useModalStore';
 import type { BillModel } from '../../types/bill.type';
 import { CustomTable, ErrorMessage, StatusChip } from '../ui';
 import type { ColumnConfig } from '../ui/CustomTable/CustomTable.types';
@@ -16,8 +17,10 @@ export const BillTable = () => {
     pagination: { page, pageSize },
     filter: { status },
     setPage,
-    setPageSize
+    setPageSize,
+    setSelectedBill
   } = useBillStore();
+  const { openModal } = useModalStore();
   const {
     data: queryResult,
     isLoading,
@@ -68,7 +71,8 @@ export const BillTable = () => {
   ];
 
   const onRowClick = (bill: BillModel) => {
-    console.log(bill);
+    setSelectedBill(bill);
+    openModal(MODAL_TYPES.BILL_DETAILS);
   };
 
   const onPageChange = (page: number) => {
