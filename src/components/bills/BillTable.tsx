@@ -14,6 +14,7 @@ import type { ColumnConfig } from '../ui/CustomTable/CustomTable.types';
 export const BillTable = () => {
   const {
     pagination: { page, pageSize },
+    filter: { status },
     setPage,
     setPageSize
   } = useBillStore();
@@ -22,7 +23,7 @@ export const BillTable = () => {
     isLoading,
     isError,
     error
-  } = useBillsQuery(page, pageSize, 'Current');
+  } = useBillsQuery(page, pageSize, status);
 
   const { hasError, errorMessage } = useQueryError({
     isError,

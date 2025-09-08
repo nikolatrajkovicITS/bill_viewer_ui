@@ -5,7 +5,7 @@ import type { BillType } from '../types/bill.type';
 
 type BillId = string;
 type FilterState = {
-  status: BillType | '';
+  status: BillType;
 };
 
 type PaginationState = {
@@ -30,10 +30,11 @@ export const useBillStore = create<BillStore>((set) => ({
 
   setStatusFilter: (status) =>
     set((state) => ({
-      filter: { ...state.filter, status }
+      filter: { ...state.filter, status },
+      pagination: { ...state.pagination, page: 0 }
     })),
 
-  clearFilters: () => set({ filter: { status: '' } }),
+  clearFilters: () => set({ filter: { status: BILL_STATUSES.CURRENT } }),
 
   setPage: (page) =>
     set((state) => ({

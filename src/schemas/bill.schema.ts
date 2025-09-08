@@ -26,8 +26,8 @@ export const billApiSchema = z.object({
     billType: z.string().optional(),
     shortTitleEn: z.string().optional(),
     shortTitleGa: z.string().optional(),
-    longTitleEn: z.string().optional(),
-    longTitleGa: z.string().optional(),
+    longTitleEn: z.string().nullable().optional(),
+    longTitleGa: z.string().nullable().optional(),
     mostRecentStage: z
       .object({
         event: z.object({
@@ -48,7 +48,7 @@ export const billApiSchema = z.object({
               showAs: z.string().nullable(),
               uri: z.string().nullable()
             }),
-            isPrimary: z.boolean()
+            isPrimary: z.boolean().optional()
           })
         })
       )
@@ -83,15 +83,16 @@ export const adaptBillData = (apiItem: unknown) => {
 
   const status = bill.mostRecentStage?.event?.showAs ?? '—';
   const primarySponsor =
-    bill.sponsors?.find((s) => s.sponsor.isPrimary)?.sponsor.by.showAs || '—';
+    bill.sponsors?.find((s) => s.sponsor.isPrimary === true)?.sponsor.by
+      .showAs || '—';
 
   return billModelSchema.parse({
     billNo: bill.billNo ?? '—',
     billType: bill.billType ?? '—',
     shortTitleEn: bill.shortTitleEn ?? '—',
     shortTitleGa: bill.shortTitleGa ?? '—',
-    longTitleEn: bill.longTitleEn ?? '—',
-    longTitleGa: bill.longTitleGa ?? '—',
+    longTitleEn: bill.longTitleEn || '—',
+    longTitleGa: bill.longTitleGa || '—',
     status,
     sponsor: primarySponsor
   });

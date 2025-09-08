@@ -5,20 +5,15 @@ import {
   adaptBillData,
   billApiResponseSchema
 } from '../../schemas/bill.schema';
-import { useBillStore } from '../../store/useBillStore';
 import type { BillType } from '../../types/bill.type';
 
 export const useBillsQuery = (
   page: number,
   pageSize: number,
-  type: BillType
+  status: BillType
 ) => {
-  const {
-    filter: { status }
-  } = useBillStore();
-
   return useQuery({
-    queryKey: ['bills', page, pageSize, type, status],
+    queryKey: ['bills', page, pageSize, status],
     queryFn: async () => {
       try {
         const skip = page * pageSize;
@@ -36,9 +31,9 @@ export const useBillsQuery = (
         });
 
         const parsedData = JSON.parse(data.contents);
-        const response = billApiResponseSchema.parse(parsedData);
-        const billData = response.results?.map(adaptBillData) || [];
-        const totalCount = response.head.counts.billCount;
+        const apiResponse = billApiResponseSchema.parse(parsedData);
+        const billData = apiResponse.results?.map(adaptBillData) || [];
+        const totalCount = apiResponse.head.counts.billCount;
 
         return {
           data: billData,

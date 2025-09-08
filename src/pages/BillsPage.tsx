@@ -1,10 +1,13 @@
-import { BillTable } from '../components/bills/BillTable';
+import { Container } from '@mui/material';
+
+import { BillFilter, BillHeader, BillTable } from '../components/bills';
 
 export const BillsPage = () => {
   return (
-    <main>
-      <h1>Bill Viewer</h1>
+    <Container component="main" sx={{ p: { xs: 1, sm: 4 } }}>
+      <BillHeader />
+      <BillFilter />
       <BillTable />
-    </main>
+    </Container>
   );
 };
