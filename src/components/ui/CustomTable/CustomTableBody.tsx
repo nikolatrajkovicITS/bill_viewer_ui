@@ -1,21 +1,30 @@
 import { TableBody, TableCell, TableRow } from '@mui/material';
 
 import { COMMON_TEXT } from '../../../constants';
+import { SkeletonTable } from '../SkeletonTable/SkeletonTable';
 import type { ColumnConfig } from './CustomTable.types';
 
 type CustomTableBodyProps<RowType> = {
-  readonly columns: ColumnConfig<RowType>[];
-  readonly rows: RowType[];
-  readonly emptyState?: React.ReactNode;
-  readonly onRowClick?: (row: RowType) => void;
+  columns: ColumnConfig<RowType>[];
+  rows: RowType[];
+  emptyState?: React.ReactNode;
+  onRowClick?: (row: RowType) => void;
+  isLoading?: boolean;
+  skeletonRows?: number;
 };
 
 export const CustomTableBody = <RowType,>({
   columns,
   rows,
   emptyState,
-  onRowClick
+  onRowClick,
+  isLoading = false,
+  skeletonRows = 10
 }: CustomTableBodyProps<RowType>) => {
+  if (isLoading) {
+    return <SkeletonTable columns={columns} rows={skeletonRows} />;
+  }
+
   if (rows.length === 0) {
     return (
       <TableBody>

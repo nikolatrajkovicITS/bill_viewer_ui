@@ -6,10 +6,10 @@ import type { SortConfig } from '../../../types/sort.types';
 import type { ColumnConfig } from './CustomTable.types';
 
 type CustomTableHeaderProps<RowType> = {
-  readonly columns: ColumnConfig<RowType>[];
-  readonly sortable: boolean;
-  readonly sortConfig: SortConfig<keyof RowType> | null;
-  readonly onSort: (columnId: keyof RowType) => void;
+  columns: ColumnConfig<RowType>[];
+  sortable: boolean;
+  sortConfig: SortConfig<keyof RowType> | null;
+  onSort: (columnId: keyof RowType) => void;
 };
 
 export const CustomTableHeader = <RowType,>({

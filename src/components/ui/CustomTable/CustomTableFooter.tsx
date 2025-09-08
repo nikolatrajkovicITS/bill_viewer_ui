@@ -4,7 +4,7 @@ import { TABLE_CONFIG } from '../../../constants';
 import type { PaginationConfig } from './CustomTable.types';
 
 type CustomTableFooterProps = {
-  readonly pagination?: PaginationConfig;
+  pagination?: PaginationConfig;
 };
 
 export const CustomTableFooter = ({ pagination }: CustomTableFooterProps) => {

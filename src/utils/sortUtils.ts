@@ -22,7 +22,7 @@ export const createSortCompareFn = <T>(
 };
 
 export const applySorting = <T>(
-  data: readonly T[],
+  data: T[],
   sortConfig: SortConfig<keyof T> | null
 ): T[] => {
   if (!sortConfig) return [...data];

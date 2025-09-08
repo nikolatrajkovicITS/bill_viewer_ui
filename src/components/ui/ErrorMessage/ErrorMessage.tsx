@@ -1,12 +1,12 @@
 import { RefreshOutlined } from '@mui/icons-material';
 import { Alert, Button, Stack } from '@mui/material';
 
-import { ERROR_MESSAGES, RETRY_BUTTON_TEXT } from '../../constants';
+import { ERROR_MESSAGES, RETRY_BUTTON_TEXT } from '../../../constants';
 
 type ErrorMessageProps = {
-  readonly message?: string;
-  readonly onRetry?: () => void;
-  readonly showRetry?: boolean;
+  message?: string;
+  onRetry?: () => void;
+  showRetry?: boolean;
 };
 
 export const ErrorMessage = ({

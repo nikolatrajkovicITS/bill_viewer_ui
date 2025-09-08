@@ -22,7 +22,9 @@ export const CustomTable = <RowType,>({
   emptyState,
   sortable = false,
   defaultSort,
-  onSort
+  onSort,
+  isLoading = false,
+  skeletonRows = 10
 }: CustomTableProps<RowType>) => {
   const [sortConfig, setSortConfig] = useState<SortConfig<
     keyof RowType
@@ -62,6 +64,8 @@ export const CustomTable = <RowType,>({
             rows={sortedRows}
             emptyState={emptyState}
             onRowClick={onRowClick}
+            isLoading={isLoading}
+            skeletonRows={skeletonRows}
           />
         </Table>
       </TableContainer>

@@ -1,9 +1,9 @@
 import { ERROR_MESSAGES } from '../constants';
 
 type UseErrorProps = {
-  readonly error: Error | null;
-  readonly isError: boolean;
-  readonly onRetry?: () => void;
+  error: Error | null;
+  isError: boolean;
+  onRetry?: () => void;
 };
 
 const getStatusFromError = (error: Error): number | null => {

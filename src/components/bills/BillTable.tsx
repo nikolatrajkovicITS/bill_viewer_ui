@@ -2,7 +2,6 @@ import {
   BILL_COLUMN_IDS,
   BILL_COLUMN_LABELS,
   COLUMN_WIDTHS,
-  COMMON_TEXT,
   TABLE_CONFIG
 } from '../../constants';
 import { useBillsQuery } from '../../hooks/api/useBillsQuery';
@@ -79,8 +78,6 @@ export const BillTable = () => {
     setPageSize(pageSize);
   };
 
-  if (isLoading) return <p>{COMMON_TEXT.LOADING}</p>;
-
   if (hasError)
     return (
       <ErrorMessage
@@ -94,6 +91,7 @@ export const BillTable = () => {
       columns={columns}
       rows={data}
       sortable
+      isLoading={isLoading}
       pagination={{
         page,
         pageSize,
