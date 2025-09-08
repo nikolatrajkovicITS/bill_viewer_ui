@@ -1,8 +1,15 @@
-import { COLUMN_WIDTHS, COMMON_TEXT, TABLE_CONFIG } from '../../constants';
+import {
+  BILL_COLUMN_IDS,
+  BILL_COLUMN_LABELS,
+  COLUMN_WIDTHS,
+  COMMON_TEXT,
+  TABLE_CONFIG
+} from '../../constants';
 import { useBillsQuery } from '../../hooks/api/useBillsQuery';
+import { useQueryError } from '../../hooks/useQueryError';
 import { useBillStore } from '../../store/useBillStore';
 import type { BillModel } from '../../types/bill.type';
-import { CustomTable, StatusChip } from '../ui';
+import { CustomTable, ErrorMessage, StatusChip } from '../ui';
 import type { ColumnConfig } from '../ui/CustomTable/CustomTable.types';
 
 export const BillTable = () => {
@@ -18,38 +25,44 @@ export const BillTable = () => {
     error
   } = useBillsQuery(page, pageSize, 'Current');
 
+  const { hasError, errorMessage } = useQueryError({
+    isError,
+    error,
+    onRetry: () => window.location.reload()
+  });
+
   const data = queryResult?.data || [];
   const totalCount = queryResult?.totalCount || 0;
 
   const columns: ColumnConfig<BillModel>[] = [
     {
-      id: 'billNo',
-      label: 'Bill No',
+      id: BILL_COLUMN_IDS.BILL_NO,
+      label: BILL_COLUMN_LABELS.BILL_NO,
       width: COLUMN_WIDTHS.BILL_NO,
       sortable: true
     },
     {
-      id: 'billType',
-      label: 'Type',
+      id: BILL_COLUMN_IDS.BILL_TYPE,
+      label: BILL_COLUMN_LABELS.BILL_TYPE,
       width: COLUMN_WIDTHS.TYPE,
       sortable: true
     },
     {
-      id: 'status',
-      label: 'Status',
+      id: BILL_COLUMN_IDS.STATUS,
+      label: BILL_COLUMN_LABELS.STATUS,
       width: COLUMN_WIDTHS.STATUS,
       render: (bill: BillModel) => <StatusChip status={bill.status} />,
       sortable: true
     },
     {
-      id: 'sponsor',
-      label: 'Sponsor',
+      id: BILL_COLUMN_IDS.SPONSOR,
+      label: BILL_COLUMN_LABELS.SPONSOR,
       width: COLUMN_WIDTHS.SPONSOR,
       sortable: true
     },
     {
-      id: 'shortTitleEn',
-      label: 'Short Title',
+      id: BILL_COLUMN_IDS.SHORT_TITLE_EN,
+      label: BILL_COLUMN_LABELS.SHORT_TITLE_EN,
       sortable: true
     }
   ];
@@ -68,18 +81,19 @@ export const BillTable = () => {
 
   if (isLoading) return <p>{COMMON_TEXT.LOADING}</p>;
 
-  if (isError)
+  if (hasError)
     return (
-      <p>
-        {COMMON_TEXT.ERROR_PREFIX}
-        {error?.message}
-      </p>
+      <ErrorMessage
+        message={errorMessage}
+        onRetry={() => window.location.reload()}
+      />
     );
 
   return (
     <CustomTable
       columns={columns}
       rows={data}
+      sortable
       pagination={{
         page,
         pageSize,
@@ -89,7 +103,6 @@ export const BillTable = () => {
       }}
       onRowClick={onRowClick}
       emptyState={TABLE_CONFIG.EMPTY_STATE_MESSAGE}
-      sortable={true}
     />
   );
 };
