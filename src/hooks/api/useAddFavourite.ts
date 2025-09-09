@@ -2,20 +2,19 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { API_HEADERS } from '@/config/apiHeaders';
 import { addFavouriteResponseSchema } from '@/schemas/favourites.schema';
-import type {
-  AddFavouriteResponse,
-  FavouriteId
-} from '@/types/favourites.type';
+import type { BillModel } from '@/types/bill.type';
+import type { AddFavouriteResponse } from '@/types/favourites.type';
 
 
 export const useAddFavourite = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (billId: FavouriteId): Promise<AddFavouriteResponse> => {
-      const response = await fetch(`/api/favourites/${billId}`, {
+    mutationFn: async (bill: BillModel): Promise<AddFavouriteResponse> => {
+      const response = await fetch('/api/favourites', {
         method: 'POST',
-        headers: API_HEADERS
+        headers: API_HEADERS,
+        body: JSON.stringify({ bill })
       });
 
       const data = await response.json();

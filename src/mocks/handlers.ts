@@ -1,13 +1,16 @@
 import { HttpResponse, delay, http } from 'msw';
 
-const favouritesMap = new Map<string, boolean>();
+import { addFavouriteRequestSchema } from '@/schemas/favourites.schema';
+import type { BillModel } from '@/types/bill.type';
+
+const favouritesMap = new Map<string, BillModel>();
 
 export const handlers = [
-  http.post('/api/favourites/:billId', async ({ params }) => {
-    const { billId } = params;
-    const billIdStr = String(billId);
+  http.post('/api/favourites', async ({ request }) => {
+    const body = await request.json();
+    const { bill } = addFavouriteRequestSchema.parse(body);
 
-    favouritesMap.set(billIdStr, true);
+    favouritesMap.set(bill.billNo, bill);
     await delay(300);
 
     return HttpResponse.json({

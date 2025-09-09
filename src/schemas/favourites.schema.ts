@@ -1,13 +1,15 @@
 import { z } from 'zod';
 
+import { billModelSchema } from './bill.schema';
+
 export const favouritesResponseSchema = z.object({
   success: z.boolean(),
-  favourites: z.record(z.string(), z.boolean()),
+  favourites: z.record(z.string(), billModelSchema),
   message: z.string().optional()
 });
 
 export const addFavouriteRequestSchema = z.object({
-  billId: z.string().min(1, 'Bill ID is required')
+  bill: billModelSchema
 });
 
 export const removeFavouriteRequestSchema = z.object({

@@ -1,17 +1,5 @@
-import {
-  CustomTable,
-  ErrorMessage,
-  FavouriteButton,
-  StatusChip
-} from '@/components/ui';
-import type { ColumnConfig } from '@/components/ui/CustomTable/CustomTable.types';
-import {
-  BILL_COLUMN_IDS,
-  BILL_COLUMN_LABELS,
-  COLUMN_WIDTHS,
-  TABLE_CONFIG,
-  TAB_VALUES
-} from '@/constants';
+import { CustomTable, ErrorMessage } from '@/components/ui';
+import { TABLE_CONFIG, TAB_VALUES, billColumns } from '@/constants';
 import { useBillsQuery, useGetFavourites } from '@/hooks/api';
 import { useQueryError } from '@/hooks/useQueryError';
 import { useBillStore } from '@/store/useBillStore';
@@ -46,54 +34,11 @@ export const BillTable = () => {
   // Data processing
   const allBills = queryResult?.data || [];
   const favourites = favouritesData?.favourites || {};
-  const favouritesIds = Object.keys(favourites).filter((id) => favourites[id]);
   const isFavTab = activeTab === TAB_VALUES.FAVOURITES;
 
-  const data = isFavTab
-    ? allBills.filter((bill) => favouritesIds.includes(bill.billNo))
-    : allBills;
+  const data = isFavTab ? Object.values(favourites) : allBills;
 
   const totalCount = isFavTab ? data.length : queryResult?.totalCount || 0;
-
-  const columns: ColumnConfig<BillModel>[] = [
-    {
-      id: BILL_COLUMN_IDS.BILL_NO,
-      label: BILL_COLUMN_LABELS.BILL_NO,
-      width: COLUMN_WIDTHS.BILL_NO,
-      sortable: true
-    },
-    {
-      id: BILL_COLUMN_IDS.BILL_TYPE,
-      label: BILL_COLUMN_LABELS.BILL_TYPE,
-      width: COLUMN_WIDTHS.TYPE,
-      sortable: true
-    },
-    {
-      id: BILL_COLUMN_IDS.STATUS,
-      label: BILL_COLUMN_LABELS.STATUS,
-      width: COLUMN_WIDTHS.STATUS,
-      render: (bill: BillModel) => <StatusChip status={bill.status} />,
-      sortable: true
-    },
-    {
-      id: BILL_COLUMN_IDS.SPONSOR,
-      label: BILL_COLUMN_LABELS.SPONSOR,
-      width: COLUMN_WIDTHS.SPONSOR,
-      sortable: true
-    },
-    {
-      id: BILL_COLUMN_IDS.SHORT_TITLE_EN,
-      label: BILL_COLUMN_LABELS.SHORT_TITLE_EN,
-      sortable: true
-    },
-    {
-      id: BILL_COLUMN_IDS.FAVOURITE,
-      label: BILL_COLUMN_LABELS.FAVOURITE,
-      width: COLUMN_WIDTHS.FAVOURITE,
-      render: (bill: BillModel) => <FavouriteButton billId={bill.billNo} />,
-      sortable: false
-    }
-  ];
 
   const onRowClick = (bill: BillModel) => {
     setSelectedBill(bill);
@@ -118,7 +63,7 @@ export const BillTable = () => {
 
   return (
     <CustomTable
-      columns={columns}
+      columns={billColumns}
       rows={data}
       sortable
       isLoading={isLoading}

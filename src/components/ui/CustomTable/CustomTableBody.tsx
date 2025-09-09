@@ -41,12 +41,7 @@ export const CustomTableBody = <RowType,>({
   return (
     <TableBody>
       {rows.map((row, idx) => (
-        <TableRow
-          key={idx}
-          hover
-          sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
-          onClick={() => onRowClick?.(row)}
-        >
+        <TableRow key={`${row}-${idx}`} hover onClick={() => onRowClick?.(row)}>
           {columns.map((col) => (
             <TableCell key={String(col.id)}>
               {col.render

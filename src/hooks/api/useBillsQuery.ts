@@ -28,7 +28,7 @@ export const useBillsQuery = (
         const data = await response.json();
         const apiResponse = billApiResponseSchema.parse(data);
         const billData = apiResponse.results?.map(adaptBillData) || [];
-        const totalCount = apiResponse.head.counts.billCount;
+        const totalCount = apiResponse.head?.counts?.billCount || 0;
 
         return {
           data: billData,

@@ -4,18 +4,19 @@ import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import { useAddFavourite } from '@/hooks/api/useAddFavourite';
 import { useGetFavourites } from '@/hooks/api/useGetFavourites';
 import { useRemoveFavourite } from '@/hooks/api/useRemoveFavourite';
+import type { BillModel } from '@/types/bill.type';
 
 type FavouriteButtonProps = {
-  billId: string;
+  bill: BillModel;
   onClick?: (e: React.MouseEvent) => void;
 };
 
-export const FavouriteButton = ({ billId, onClick }: FavouriteButtonProps) => {
+export const FavouriteButton = ({ bill, onClick }: FavouriteButtonProps) => {
   const { data: favouritesData } = useGetFavourites();
   const addFavourite = useAddFavourite();
   const removeFavourite = useRemoveFavourite();
 
-  const isFav = !!favouritesData?.favourites[billId];
+  const isFav = !!favouritesData?.favourites[bill.billNo];
   const isToggling = addFavourite.isPending || removeFavourite.isPending;
 
   const handleClick = async (e: React.MouseEvent) => {
@@ -23,9 +24,9 @@ export const FavouriteButton = ({ billId, onClick }: FavouriteButtonProps) => {
 
     try {
       if (isFav) {
-        await removeFavourite.mutateAsync(billId);
+        await removeFavourite.mutateAsync(bill.billNo);
       } else {
-        await addFavourite.mutateAsync(billId);
+        await addFavourite.mutateAsync(bill);
       }
       onClick?.(e);
     } catch (error) {
