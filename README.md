@@ -1,69 +1,86 @@
-# React + TypeScript + Vite
+# Bill Viewer - Irish Legislation Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application for viewing Irish legislation bills from the Oireachtas API with filtering, favorites, and bilingual support.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Bill Table**: Paginated table with bill number, type, status, and sponsor
+- **Filtering**: Filter bills by status (Current, Withdrawn, Enacted, etc.)
+- **Bill Details**: Click any row to view modal with English/Irish titles
+- **Favorites**: Heart icon to favorite/unfavorite bills (persists in state)
+- **Favorites Tab**: Separate view for favorited bills
+- **Responsive**: Mobile-first design with Material-UI
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** + **TypeScript** + **Material-UI**
+- **Vite** (build tool) + **Zustand** (state) + **TanStack Query** (API)
+- **MSW** (Mock Service Worker) for favorites API
+- **Vitest** + **React Testing Library** for testing
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Quick Start
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+```bash
+# Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start development server
+npm run dev
+
+# Open http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command                 | Description              |
+| ----------------------- | ------------------------ |
+| `npm run dev`           | Start development server |
+| `npm run build`         | Build for production     |
+| `npm run test`          | Run tests                |
+| `npm run test:coverage` | Run tests with coverage  |
+| `npm run lint`          | Run ESLint               |
+| `npm run format`        | Format code              |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## API Integration
+
+**Oireachtas API**: Real Irish legislation data via proxy (`/api/oireachtas/v1/legislation`)
+
+**Mock API (MSW)**: Simulates favorites endpoints:
+
+- `POST /api/favourites` - Add favorite
+- `DELETE /api/favourites/:id` - Remove favorite
+- `GET /api/favourites` - Get favorites
+
+## Project Structure
+
 ```
+src/
+├── components/    # UI components (bills, modals, ui)
+├── hooks/         # Custom hooks (API calls)
+├── mocks/         # MSW handlers
+├── store/         # Zustand stores
+├── types/         # TypeScript types
+└── utils/         # Helper functions
+```
+
+## Testing
+
+```bash
+npm test              # Run tests
+npm run test:ui       # Run with UI
+npm run test:coverage # With coverage
+```
+
+## Requirements Met
+
+✅ Paginated bill table with required columns  
+✅ Filter by bill type/status  
+✅ Modal with English/Gaeilge tabs  
+✅ Favorites system with console logging  
+✅ Favorites tab view  
+✅ React + Material-UI + TypeScript  
+✅ Unit tests and code quality tools
+
+---
+
+_Technical assessment submission demonstrating modern React development practices._
