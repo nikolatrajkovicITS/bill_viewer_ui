@@ -17,6 +17,7 @@ A React application for viewing Irish legislation bills from the Oireachtas API 
 - **Vite** (build tool) + **Zustand** (state) + **TanStack Query** (API)
 - **MSW** (Mock Service Worker) for favorites API
 - **Vitest** + **React Testing Library** for testing
+- **ESLint** + **Prettier** + **Husky** for code quality and formatting
 
 ## Quick Start
 
@@ -82,5 +83,3 @@ npm run test:coverage # With coverage
 ✅ Unit tests and code quality tools
 
 ---
-
-_Technical assessment submission demonstrating modern React development practices._
