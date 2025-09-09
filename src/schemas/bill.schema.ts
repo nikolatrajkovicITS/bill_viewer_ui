@@ -67,6 +67,7 @@ export const billApiResponseSchema = z.object({
 });
 
 export const billModelSchema = z.object({
+  id: z.string(),
   billNo: z.string().default('—'),
   billType: z.string().default('—'),
   shortTitleEn: z.string().default('—'),
@@ -86,7 +87,10 @@ export const adaptBillData = (apiItem: unknown) => {
     bill.sponsors?.find((s) => s.sponsor.isPrimary === true)?.sponsor.by
       .showAs || '—';
 
+  const uniqueId = `${bill.billNo}-${bill.billType}-${bill.shortTitleEn}`;
+
   return billModelSchema.parse({
+    id: uniqueId,
     billNo: bill.billNo ?? '—',
     billType: bill.billType ?? '—',
     shortTitleEn: bill.shortTitleEn ?? '—',

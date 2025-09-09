@@ -10,7 +10,7 @@ export const handlers = [
     const body = await request.json();
     const { bill } = addFavouriteRequestSchema.parse(body);
 
-    favouritesMap.set(bill.billNo, bill);
+    favouritesMap.set(bill.id, bill);
     await delay(300);
 
     return HttpResponse.json({

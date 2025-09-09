@@ -16,7 +16,7 @@ export const FavouriteButton = ({ bill, onClick }: FavouriteButtonProps) => {
   const addFavourite = useAddFavourite();
   const removeFavourite = useRemoveFavourite();
 
-  const isFav = !!favouritesData?.favourites[bill.billNo];
+  const isFav = !!favouritesData?.favourites[bill.id];
   const isToggling = addFavourite.isPending || removeFavourite.isPending;
 
   const handleClick = async (e: React.MouseEvent) => {
@@ -24,7 +24,7 @@ export const FavouriteButton = ({ bill, onClick }: FavouriteButtonProps) => {
 
     try {
       if (isFav) {
-        await removeFavourite.mutateAsync(bill.billNo);
+        await removeFavourite.mutateAsync(bill.id);
       } else {
         await addFavourite.mutateAsync(bill);
       }
