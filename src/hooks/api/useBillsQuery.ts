@@ -43,8 +43,6 @@ export const useBillsQuery = (
         console.error('Error in useBills:', error);
         throw error;
       }
-    },
-    staleTime: 1000 * 60 * 1,
-    refetchOnWindowFocus: false
+    }
   });
 };

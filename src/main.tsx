@@ -3,13 +3,12 @@ import { createRoot } from 'react-dom/client';
 
 import { StrictMode } from 'react';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import App from './App.tsx';
+import { queryClient } from './config/queryClient';
 import './index.css';
 import { appTheme } from './styles/theme';
-
-const queryClient = new QueryClient();
 
 // Start MSW in development mode
 async function enableMocking() {
@@ -19,7 +18,7 @@ async function enableMocking() {
 
   const { worker } = await import('./mocks/browser');
   return worker.start({
-    onUnhandledRequest: 'warn'
+    onUnhandledRequest: 'bypass'
   });
 }
 

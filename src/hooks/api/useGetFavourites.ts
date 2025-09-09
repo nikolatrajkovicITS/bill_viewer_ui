@@ -8,11 +8,10 @@ export const useGetFavourites = () => {
     queryKey: ['favourites'],
     queryFn: async (): Promise<GetFavouritesResponse> => {
       const response = await fetch('/api/favourites');
+
       const data = await response.json();
 
       return getFavouritesResponseSchema.parse(data);
-    },
-    staleTime: 1 * 60 * 1000,
-    refetchOnWindowFocus: false
+    }
   });
 };

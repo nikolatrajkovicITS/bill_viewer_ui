@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { API_HEADERS } from '../../config/apiHeaders';
 import { removeFavouriteResponseSchema } from '../../schemas/favourites.schema';
 import type {
   FavouriteId,
@@ -15,10 +16,9 @@ export const useRemoveFavourite = () => {
     ): Promise<RemoveFavouriteResponse> => {
       const response = await fetch(`/api/favourites/${billId}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: API_HEADERS
       });
+
       const data = await response.json();
 
       return removeFavouriteResponseSchema.parse(data);

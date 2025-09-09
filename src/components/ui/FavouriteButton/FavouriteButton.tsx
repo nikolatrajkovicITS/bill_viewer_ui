@@ -34,26 +34,34 @@ export const FavouriteButton = ({ billId, onClick }: FavouriteButtonProps) => {
   };
 
   return (
-    <Tooltip title={isFav ? 'Remove from favourites' : 'Add to favourites'}>
-      <IconButton
-        onClick={handleClick}
-        size="small"
-        disabled={isToggling}
-        sx={{
-          color: isFav ? 'error.main' : 'grey.400',
-          '&:hover': {
-            color: isFav ? 'error.dark' : 'error.light'
-          }
-        }}
-      >
-        {isToggling ? (
+    <>
+      {isToggling ? (
+        <IconButton
+          size="small"
+          disabled
+          sx={{
+            color: 'grey.400',
+            cursor: 'not-allowed'
+          }}
+        >
           <CircularProgress size={20} color="inherit" />
-        ) : isFav ? (
-          <Favorite />
-        ) : (
-          <FavoriteBorder />
-        )}
-      </IconButton>
-    </Tooltip>
+        </IconButton>
+      ) : (
+        <Tooltip title={isFav ? 'Remove from favourites' : 'Add to favourites'}>
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{
+              color: isFav ? 'error.main' : 'grey.400',
+              '&:hover': {
+                color: isFav ? 'error.dark' : 'error.light'
+              }
+            }}
+          >
+            {isFav ? <Favorite /> : <FavoriteBorder />}
+          </IconButton>
+        </Tooltip>
+      )}
+    </>
   );
 };
