@@ -1,4 +1,5 @@
-import { MODAL_TYPES, useModalStore } from '../../store/useModalStore';
+import { MODAL_TYPES, useModalStore } from '@/store/useModalStore';
+
 import { BillModal } from './';
 
 export const ModalManager = () => {

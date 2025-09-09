@@ -1,5 +1,5 @@
-import { ModalManager } from './components/modals';
-import { BillsPage } from './pages/BillsPage';
+import { ModalManager } from '@/components/modals';
+import { BillsPage } from '@/pages/BillsPage';
 
 function App() {
   return (

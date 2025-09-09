@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getFavouritesResponseSchema } from '../../schemas/favourites.schema';
-import type { GetFavouritesResponse } from '../../types/favourites.type';
+import { getFavouritesResponseSchema } from '@/schemas/favourites.schema';
+import type { GetFavouritesResponse } from '@/types/favourites.type';
+
 
 export const useGetFavourites = () => {
   return useQuery({

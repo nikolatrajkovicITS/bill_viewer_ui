@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
-import type { SortConfig } from '../../../types/sort.types';
+import type { SortConfig } from '@/types/sort.types';
+
 
 export type ColumnConfig<RowType> = {
   id: string;

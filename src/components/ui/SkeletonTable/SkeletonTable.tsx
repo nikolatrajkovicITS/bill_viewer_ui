@@ -1,6 +1,6 @@
 import { Skeleton, TableBody, TableCell, TableRow } from '@mui/material';
 
-import type { ColumnConfig } from '../CustomTable/CustomTable.types';
+import type { ColumnConfig } from '@/components/ui/CustomTable';
 
 type SkeletonTableProps<RowType> = {
   columns: ColumnConfig<RowType>[];

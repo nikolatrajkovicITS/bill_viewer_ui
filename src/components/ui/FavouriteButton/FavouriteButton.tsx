@@ -1,9 +1,9 @@
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 
-import { useAddFavourite } from '../../../hooks/api/useAddFavourite';
-import { useGetFavourites } from '../../../hooks/api/useGetFavourites';
-import { useRemoveFavourite } from '../../../hooks/api/useRemoveFavourite';
+import { useAddFavourite } from '@/hooks/api/useAddFavourite';
+import { useGetFavourites } from '@/hooks/api/useGetFavourites';
+import { useRemoveFavourite } from '@/hooks/api/useRemoveFavourite';
 
 type FavouriteButtonProps = {
   billId: string;

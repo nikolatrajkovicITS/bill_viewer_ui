@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
-import { useBillStore } from '../../../store/useBillStore';
-import { useModalStore } from '../../../store/useModalStore';
-import { Modal } from '../../ui';
-import { BillModalTabs } from './BillModalTabs';
+import { BillModalTabs } from '@/components/modals';
+import { Modal } from '@/components/ui';
+import { useBillStore } from '@/store/useBillStore';
+import { useModalStore } from '@/store/useModalStore';
+
 
 export const BillModal = () => {
   const [tabValue, setTabValue] = useState(0);

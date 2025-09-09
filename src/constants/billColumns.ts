@@ -1,4 +1,4 @@
-import type { BillModel } from '../types/bill.type';
+import type { BillModel } from '@/types/bill.type';
 
 export const BILL_COLUMN_IDS = {
   BILL_NO: 'billNo',

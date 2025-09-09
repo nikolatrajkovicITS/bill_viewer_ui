@@ -1,7 +1,7 @@
 import { Box, TablePagination } from '@mui/material';
 
-import { TABLE_CONFIG } from '../../../constants';
-import type { PaginationConfig } from './CustomTable.types';
+import type { PaginationConfig } from '@/components/ui/CustomTable';
+import { TABLE_CONFIG } from '@/constants';
 
 type CustomTableFooterProps = {
   pagination?: PaginationConfig;

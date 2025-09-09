@@ -1,7 +1,7 @@
 import { Chip } from '@mui/material';
 
-import { COMMON_TEXT } from '../../../constants';
-import { getStatusColor } from '../../../utils';
+import { COMMON_TEXT } from '@/constants';
+import { getStatusColor } from '@/utils';
 
 type StatusChipProps = {
   status: string;
@@ -14,6 +14,7 @@ export const StatusChip = ({ status }: StatusChipProps) => {
 
   return (
     <Chip
+      id="status-chip"
       label={status}
       color={getStatusColor(status)}
       size="small"

@@ -1,7 +1,7 @@
 import { RefreshOutlined } from '@mui/icons-material';
 import { Alert, Button, Stack } from '@mui/material';
 
-import { ERROR_MESSAGES, RETRY_BUTTON_TEXT } from '../../../constants';
+import { ERROR_MESSAGES, RETRY_BUTTON_TEXT } from '@/constants';
 
 type ErrorMessageProps = {
   message?: string;

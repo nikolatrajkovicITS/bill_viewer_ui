@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { BILL_STATUSES } from '../schemas/bill.schema';
-import type { BillModel, BillType } from '../types/bill.type';
+import { BILL_STATUSES } from '@/schemas/bill.schema';
+import type { BillModel, BillType } from '@/types/bill.type';
 
 type BillId = string;
 type FilterState = {

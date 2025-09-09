@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { Close } from '@mui/icons-material';
 import {
   Dialog,
@@ -8,7 +10,6 @@ import {
   useTheme
 } from '@mui/material';
 
-import type { ReactNode } from 'react';
 
 type ModalProps = {
   open: boolean;

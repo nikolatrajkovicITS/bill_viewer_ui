@@ -1,11 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { httpClient } from '../../config/httpClient';
-import {
-  adaptBillData,
-  billApiResponseSchema
-} from '../../schemas/bill.schema';
-import type { BillType } from '../../types/bill.type';
+import { httpClient } from '@/config/httpClient';
+import { adaptBillData, billApiResponseSchema } from '@/schemas/bill.schema';
+import type { BillType } from '@/types/bill.type';
+
 
 export const useBillsQuery = (
   page: number,

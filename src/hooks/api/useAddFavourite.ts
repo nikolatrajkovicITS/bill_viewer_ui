@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { API_HEADERS } from '../../config/apiHeaders';
-import { addFavouriteResponseSchema } from '../../schemas/favourites.schema';
+import { API_HEADERS } from '@/config/apiHeaders';
+import { addFavouriteResponseSchema } from '@/schemas/favourites.schema';
 import type {
   AddFavouriteResponse,
   FavouriteId
-} from '../../types/favourites.type';
+} from '@/types/favourites.type';
+
 
 export const useAddFavourite = () => {
   const queryClient = useQueryClient();

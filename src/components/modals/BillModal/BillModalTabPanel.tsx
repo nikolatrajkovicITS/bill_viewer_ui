@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react';
+
 import { Box } from '@mui/material';
 
-import type { ReactNode } from 'react';
 
 type BillModalTabPanelProps = {
   children?: ReactNode;

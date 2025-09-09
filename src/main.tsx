@@ -1,14 +1,15 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { createRoot } from 'react-dom/client';
-
 import { StrictMode } from 'react';
 
 import { QueryClientProvider } from '@tanstack/react-query';
+import { createRoot } from 'react-dom/client';
 
-import App from './App.tsx';
-import { queryClient } from './config/queryClient';
-import './index.css';
-import { appTheme } from './styles/theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+
+import App from '@/App.tsx';
+import { queryClient } from '@/config/queryClient';
+import { appTheme } from '@/styles/theme';
+
+
 
 // Start MSW in development mode
 async function enableMocking() {

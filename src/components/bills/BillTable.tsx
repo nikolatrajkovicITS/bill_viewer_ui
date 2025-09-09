@@ -1,17 +1,21 @@
 import {
+  CustomTable,
+  ErrorMessage,
+  FavouriteButton,
+  StatusChip
+} from '@/components/ui';
+import type { ColumnConfig } from '@/components/ui/CustomTable/CustomTable.types';
+import {
   BILL_COLUMN_IDS,
   BILL_COLUMN_LABELS,
   COLUMN_WIDTHS,
   TABLE_CONFIG
-} from '../../constants';
-import { useBillsQuery } from '../../hooks/api/useBillsQuery';
-import { useGetFavourites } from '../../hooks/api/useGetFavourites';
-import { useQueryError } from '../../hooks/useQueryError';
-import { useBillStore } from '../../store/useBillStore';
-import { MODAL_TYPES, useModalStore } from '../../store/useModalStore';
-import type { BillModel } from '../../types/bill.type';
-import { CustomTable, ErrorMessage, FavouriteButton, StatusChip } from '../ui';
-import type { ColumnConfig } from '../ui/CustomTable/CustomTable.types';
+} from '@/constants';
+import { useBillsQuery, useGetFavourites } from '@/hooks/api';
+import { useQueryError } from '@/hooks/useQueryError';
+import { useBillStore } from '@/store/useBillStore';
+import { MODAL_TYPES, useModalStore } from '@/store/useModalStore';
+import type { BillModel } from '@/types/bill.type';
 
 type BillTableProps = {
   showFavouritesOnly?: boolean;

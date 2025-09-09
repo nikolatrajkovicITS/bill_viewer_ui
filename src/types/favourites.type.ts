@@ -7,7 +7,7 @@ import {
   getFavouritesResponseSchema,
   removeFavouriteRequestSchema,
   removeFavouriteResponseSchema
-} from '../schemas/favourites.schema';
+} from '@/schemas/favourites.schema';
 
 export type FavouritesResponse = z.infer<typeof favouritesResponseSchema>;
 

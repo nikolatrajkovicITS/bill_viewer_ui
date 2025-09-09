@@ -1,9 +1,9 @@
 import type { SelectChangeEvent } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
-import { BILL_STATUS_LIST } from '../../schemas/bill.schema';
-import { useBillStore } from '../../store/useBillStore';
-import type { BillType } from '../../types/bill.type';
+import { BILL_STATUS_LIST } from '@/schemas/bill.schema';
+import { useBillStore } from '@/store/useBillStore';
+import type { BillType } from '@/types/bill.type';
 
 export const BillFilter = () => {
   const { filter, setStatusFilter } = useBillStore();

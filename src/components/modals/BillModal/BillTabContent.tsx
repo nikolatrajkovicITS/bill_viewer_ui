@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
-import { LANGUAGES, type Language } from '../../../constants';
-import type { BillModel } from '../../../types/bill.type';
+import { LANGUAGES, type Language } from '@/constants';
+import type { BillModel } from '@/types/bill.type';
 
 type BillTabContentProps = {
   bill: BillModel;

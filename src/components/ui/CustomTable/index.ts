@@ -1,5 +1,5 @@
-export { CustomTable } from './CustomTable';
+export * from './CustomTable';
 export type * from './CustomTable.types';
-export { CustomTableBody } from './CustomTableBody';
-export { CustomTableFooter } from './CustomTableFooter';
-export { CustomTableHeader } from './CustomTableHeader';
+export * from './CustomTableBody';
+export * from './CustomTableFooter';
+export * from './CustomTableHeader';

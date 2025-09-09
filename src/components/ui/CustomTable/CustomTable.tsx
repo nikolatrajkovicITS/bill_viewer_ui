@@ -1,18 +1,17 @@
-import { Paper, Table, TableContainer } from '@mui/material';
-
 import { useMemo, useState } from 'react';
 
-import { SORT_DIRECTIONS, TABLE_CONFIG } from '../../../constants';
-import type { SortConfig } from '../../../types/sort.types';
+import { Paper, Table, TableContainer } from '@mui/material';
+
 import {
-  applySorting,
-  createSortConfig,
-  toggleSortDirection
-} from '../../../utils';
-import type { CustomTableProps } from './CustomTable.types';
-import { CustomTableBody } from './CustomTableBody';
-import { CustomTableFooter } from './CustomTableFooter';
-import { CustomTableHeader } from './CustomTableHeader';
+  CustomTableBody,
+  CustomTableFooter,
+  CustomTableHeader,
+  type CustomTableProps
+} from '@/components/ui/CustomTable';
+import { SORT_DIRECTIONS, TABLE_CONFIG } from '@/constants';
+import type { SortConfig } from '@/types/sort.types';
+import { applySorting, createSortConfig, toggleSortDirection } from '@/utils';
+
 
 export const CustomTable = <RowType,>({
   columns,

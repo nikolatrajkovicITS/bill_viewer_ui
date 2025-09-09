@@ -1,9 +1,11 @@
 import { Box, Tab, Tabs } from '@mui/material';
 
-import { LANGUAGES } from '../../../constants';
-import type { BillModel } from '../../../types/bill.type';
-import { BillModalTabPanel } from './BillModalTabPanel';
-import { BillTabContent } from './BillTabContent';
+import {
+  BillModalTabPanel,
+  BillTabContent
+} from '@/components/modals/BillModal';
+import { LANGUAGES } from '@/constants';
+import type { BillModel } from '@/types/bill.type';
 
 type BillModalTabsProps = {
   tabValue: number;

@@ -1,8 +1,9 @@
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import { Box, TableCell, TableHead, TableRow } from '@mui/material';
 
-import { SORT_DIRECTIONS } from '../../../constants';
-import type { SortConfig } from '../../../types/sort.types';
+import { SORT_DIRECTIONS } from '@/constants';
+import type { SortConfig } from '@/types/sort.types';
+
 import type { ColumnConfig } from './CustomTable.types';
 
 type CustomTableHeaderProps<RowType> = {

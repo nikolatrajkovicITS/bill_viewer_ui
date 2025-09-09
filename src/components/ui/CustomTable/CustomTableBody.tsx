@@ -1,7 +1,8 @@
 import { TableBody, TableCell, TableRow } from '@mui/material';
 
-import { COMMON_TEXT } from '../../../constants';
-import { SkeletonTable } from '../SkeletonTable/SkeletonTable';
+import { SkeletonTable } from '@/components/ui';
+import { COMMON_TEXT } from '@/constants';
+
 import type { ColumnConfig } from './CustomTable.types';
 
 type CustomTableBodyProps<RowType> = {
