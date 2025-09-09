@@ -8,5 +8,15 @@ export default defineConfig({
     alias: {
       '@': '/src'
     }
+  },
+  server: {
+    proxy: {
+      '/api/oireachtas': {
+        target: 'https://api.oireachtas.ie',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/oireachtas/, ''),
+        secure: true
+      }
+    }
   }
 });

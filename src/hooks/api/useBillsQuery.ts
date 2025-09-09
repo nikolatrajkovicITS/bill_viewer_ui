@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { httpClient } from '@/config/httpClient';
 import { adaptBillData, billApiResponseSchema } from '@/schemas/bill.schema';
 import type { BillType } from '@/types/bill.type';
 
@@ -21,15 +20,13 @@ export const useBillsQuery = (
           bill_status: status
         });
 
-        const apiUrl = `https://api.oireachtas.ie/v1/legislation?${params}`;
-        console.log('Making request to:', apiUrl);
+        const proxyUrl = `/api/oireachtas/v1/legislation?${params}`;
+        console.log('Making request to proxy:', proxyUrl);
 
-        const { data } = await httpClient.get('', {
-          params: { url: apiUrl }
-        });
+        const response = await fetch(proxyUrl);
 
-        const parsedData = JSON.parse(data.contents);
-        const apiResponse = billApiResponseSchema.parse(parsedData);
+        const data = await response.json();
+        const apiResponse = billApiResponseSchema.parse(data);
         const billData = apiResponse.results?.map(adaptBillData) || [];
         const totalCount = apiResponse.head.counts.billCount;
 
