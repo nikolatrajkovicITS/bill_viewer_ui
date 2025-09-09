@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
+import { TAB_VALUES, type TabValue } from '@/constants';
 import { BILL_STATUSES } from '@/schemas/bill.schema';
 import type { BillModel, BillType } from '@/types/bill.type';
 
-type BillId = string;
 type FilterState = {
   status: BillType;
 };
@@ -14,8 +14,8 @@ type PaginationState = {
 };
 
 type BillStore = {
-  favourites: Record<BillId, boolean>;
   selectedBill: BillModel | null;
+  activeTab: TabValue;
   filter: FilterState;
   pagination: PaginationState;
   setStatusFilter: (status: BillType) => void;
@@ -23,11 +23,12 @@ type BillStore = {
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
   setSelectedBill: (bill: BillModel) => void;
+  setActiveTab: (tab: TabValue) => void;
 };
 
 export const useBillStore = create<BillStore>((set) => ({
-  favourites: {},
   selectedBill: null,
+  activeTab: TAB_VALUES.ALL,
   filter: { status: BILL_STATUSES.CURRENT },
   pagination: { page: 0, pageSize: 10 },
 
@@ -49,5 +50,7 @@ export const useBillStore = create<BillStore>((set) => ({
       pagination: { ...state.pagination, pageSize, page: 0 }
     })),
 
-  setSelectedBill: (bill) => set({ selectedBill: bill })
+  setSelectedBill: (bill) => set({ selectedBill: bill }),
+
+  setActiveTab: (tab) => set({ activeTab: tab })
 }));

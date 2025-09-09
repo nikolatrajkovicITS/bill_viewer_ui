@@ -9,7 +9,8 @@ import {
   BILL_COLUMN_IDS,
   BILL_COLUMN_LABELS,
   COLUMN_WIDTHS,
-  TABLE_CONFIG
+  TABLE_CONFIG,
+  TAB_VALUES
 } from '@/constants';
 import { useBillsQuery, useGetFavourites } from '@/hooks/api';
 import { useQueryError } from '@/hooks/useQueryError';
@@ -17,22 +18,18 @@ import { useBillStore } from '@/store/useBillStore';
 import { MODAL_TYPES, useModalStore } from '@/store/useModalStore';
 import type { BillModel } from '@/types/bill.type';
 
-type BillTableProps = {
-  showFavouritesOnly?: boolean;
-};
-
-export const BillTable = ({
-  showFavouritesOnly = false
-}: BillTableProps = {}) => {
+export const BillTable = () => {
   const {
     pagination: { page, pageSize },
     filter: { status },
+    activeTab,
     setPage,
     setPageSize,
     setSelectedBill
   } = useBillStore();
   const { data: favouritesData } = useGetFavourites();
   const { openModal } = useModalStore();
+
   const {
     data: queryResult,
     isLoading,
@@ -46,17 +43,17 @@ export const BillTable = ({
     onRetry: () => window.location.reload()
   });
 
-  const allData = queryResult?.data || [];
+  // Data processing
+  const allBills = queryResult?.data || [];
   const favourites = favouritesData?.favourites || {};
-  const favouriteIds = Object.keys(favourites).filter((id) => favourites[id]);
+  const favouritesIds = Object.keys(favourites).filter((id) => favourites[id]);
+  const isFavTab = activeTab === TAB_VALUES.FAVOURITES;
 
-  const data = showFavouritesOnly
-    ? allData.filter((bill) => favouriteIds.includes(bill.billNo))
-    : allData;
+  const data = isFavTab
+    ? allBills.filter((bill) => favouritesIds.includes(bill.billNo))
+    : allBills;
 
-  const totalCount = showFavouritesOnly
-    ? data.length
-    : queryResult?.totalCount || 0;
+  const totalCount = isFavTab ? data.length : queryResult?.totalCount || 0;
 
   const columns: ColumnConfig<BillModel>[] = [
     {
