@@ -5,7 +5,7 @@
   "printWidth": 80,
   "tabWidth": 2,
   "arrowParens": "always",
-  "importOrder": ["^react$", "^@tanstack/(.*)$", "^axios$", "^[./]"],
+  "importOrder": ["^react$", "^@tanstack/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "plugins": ["@trivago/prettier-plugin-sort-imports"]
