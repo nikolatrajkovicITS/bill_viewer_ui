@@ -11,13 +11,27 @@ import { appTheme } from './styles/theme';
 
 const queryClient = new QueryClient();
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={appTheme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </QueryClientProvider>
-  </StrictMode>
-);
+// Start MSW in development mode
+async function enableMocking() {
+  if (import.meta.env.MODE !== 'development') {
+    return;
+  }
+
+  const { worker } = await import('./mocks/browser');
+  return worker.start({
+    onUnhandledRequest: 'warn'
+  });
+}
+
+enableMocking().then(() => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={appTheme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StrictMode>
+  );
+});

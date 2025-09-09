@@ -5,14 +5,21 @@ import {
   TABLE_CONFIG
 } from '../../constants';
 import { useBillsQuery } from '../../hooks/api/useBillsQuery';
+import { useGetFavourites } from '../../hooks/api/useGetFavourites';
 import { useQueryError } from '../../hooks/useQueryError';
 import { useBillStore } from '../../store/useBillStore';
 import { MODAL_TYPES, useModalStore } from '../../store/useModalStore';
 import type { BillModel } from '../../types/bill.type';
-import { CustomTable, ErrorMessage, StatusChip } from '../ui';
+import { CustomTable, ErrorMessage, FavouriteButton, StatusChip } from '../ui';
 import type { ColumnConfig } from '../ui/CustomTable/CustomTable.types';
 
-export const BillTable = () => {
+type BillTableProps = {
+  showFavouritesOnly?: boolean;
+};
+
+export const BillTable = ({
+  showFavouritesOnly = false
+}: BillTableProps = {}) => {
   const {
     pagination: { page, pageSize },
     filter: { status },
@@ -20,6 +27,7 @@ export const BillTable = () => {
     setPageSize,
     setSelectedBill
   } = useBillStore();
+  const { data: favouritesData } = useGetFavourites();
   const { openModal } = useModalStore();
   const {
     data: queryResult,
@@ -34,8 +42,17 @@ export const BillTable = () => {
     onRetry: () => window.location.reload()
   });
 
-  const data = queryResult?.data || [];
-  const totalCount = queryResult?.totalCount || 0;
+  const allData = queryResult?.data || [];
+  const favourites = favouritesData?.favourites || {};
+  const favouriteIds = Object.keys(favourites).filter((id) => favourites[id]);
+
+  const data = showFavouritesOnly
+    ? allData.filter((bill) => favouriteIds.includes(bill.billNo))
+    : allData;
+
+  const totalCount = showFavouritesOnly
+    ? data.length
+    : queryResult?.totalCount || 0;
 
   const columns: ColumnConfig<BillModel>[] = [
     {
@@ -67,6 +84,13 @@ export const BillTable = () => {
       id: BILL_COLUMN_IDS.SHORT_TITLE_EN,
       label: BILL_COLUMN_LABELS.SHORT_TITLE_EN,
       sortable: true
+    },
+    {
+      id: BILL_COLUMN_IDS.FAVOURITE,
+      label: BILL_COLUMN_LABELS.FAVOURITE,
+      width: COLUMN_WIDTHS.FAVOURITE,
+      render: (bill: BillModel) => <FavouriteButton billId={bill.billNo} />,
+      sortable: false
     }
   ];
 

@@ -50,7 +50,7 @@ export const CustomTableBody = <RowType,>({
             <TableCell key={String(col.id)}>
               {col.render
                 ? col.render(row)
-                : String(row[col.id] ?? COMMON_TEXT.NO_DATA)}
+                : String(row[col.id as keyof RowType] ?? COMMON_TEXT.NO_DATA)}
             </TableCell>
           ))}
         </TableRow>

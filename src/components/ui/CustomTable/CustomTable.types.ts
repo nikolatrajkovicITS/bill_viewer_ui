@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { SortConfig } from '../../../types/sort.types';
 
 export type ColumnConfig<RowType> = {
-  id: keyof RowType;
+  id: string;
   label: string;
   width?: number | string;
   sortable?: boolean;

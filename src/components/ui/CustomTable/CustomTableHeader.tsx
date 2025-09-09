@@ -29,7 +29,7 @@ export const CustomTableHeader = <RowType,>({
               cursor: sortable && col.sortable ? 'pointer' : 'default',
               userSelect: 'none'
             }}
-            onClick={() => col.sortable && onSort(col.id)}
+            onClick={() => col.sortable && onSort(col.id as keyof RowType)}
           >
             <Box display="flex" alignItems="center" gap={1}>
               {col.label}
