@@ -21,7 +21,7 @@ export const BILL_COLUMN_LABELS = {
 } as const;
 
 export const COLUMN_WIDTHS = {
-  BILL_NO: '100px',
+  BILL_NO: '120px',
   TYPE: '120px',
   STATUS: '140px',
   SPONSOR: '180px',
