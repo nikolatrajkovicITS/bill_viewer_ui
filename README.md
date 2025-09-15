@@ -6,6 +6,7 @@ A React application for viewing Irish legislation bills from the Oireachtas API 
 
 - **Bill Table**: Paginated table with bill number, type, status, and sponsor
 - **Filtering**: Filter bills by status (Current, Withdrawn, Enacted, etc.)
+  > I went with a Status filter (instead of Type) based on my understanding of the requirement. Status seemed more suitable for common searches, and Type had fewer options.
 - **Bill Details**: Click any row to view modal with English/Irish titles
 - **Favorites**: Heart icon to favorite/unfavorite bills (persists in state)
 - **Favorites Tab**: Separate view for favorited bills
